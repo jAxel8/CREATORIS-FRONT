@@ -1,20 +1,132 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <div class="container">
+
+      <ion-text color="light">FECHA:</ion-text>
+      <ion-datetime-button datetime="datetime"></ion-datetime-button>
+
+
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ng-container [formGroup]="taskForm">
+    <ion-grid>
+      <ion-row>
+
+        <ion-col size="12">
+          <ion-card *ngIf=stats>
+            <ion-card-header>
+              <ion-card-title>TAREAS: {{stats.totalTasks}} </ion-card-title>
+
+
+            </ion-card-header>
+
+            <ion-card-content>
+              <p>
+                <ion-text color="success">COMPLETADAS: {{stats.completedTasks}}</ion-text>
+              </p>
+              <p>
+                <ion-text color="tertiary">PENDIENTES: {{stats.pendingTasks}}</ion-text>
+              </p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12">
+          <ion-list>
+            <ng-container *ngIf="loaded && tasks.length > 0">
+              <ion-item-sliding *ngFor="let task of tasks">
+
+
+                <ion-item>
+                  <ion-checkbox (ionChange)="handleCheckbox($event,task._id)" [checked]="task.done"
+                    justify="space-between">
+                    {{task.task}}</ion-checkbox>
+                </ion-item>
+
+                <ion-item-options side="end">
+                  <ion-item-option (click)=openUpdateModal(task)>
+                    <ion-icon slot="icon-only" name="create"></ion-icon>
+                  </ion-item-option>
+                  <ion-item-option (click)="delete(task._id)" color="danger">
+                    <ion-icon slot="icon-only" name="trash"></ion-icon>
+                  </ion-item-option>
+                </ion-item-options>
+              </ion-item-sliding>
+            </ng-container>
+
+            <ng-container *ngIf="!loaded">
+              <ion-item *ngFor="let skeleton of skeletons">
+
+                <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+
+              </ion-item>
+            </ng-container>
+
+
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <app-fab-button id="open-modal"></app-fab-button>
+
+
+
+
+
+
+
+
+
+
+    <!-- MODAL TASK -->
+
+    <ion-modal trigger="open-modal" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
+      <ng-template>
+        <div class="block">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="12">
+                <ion-label required>TAREA:</ion-label>
+                <ion-item lines="none" fill="outline">
+                  <ion-input formControlName="task" placeholder="Ingresa la tarea a realizar">
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+
+
+            </ion-row>
+
+            <ion-row class="ion-justify-content-end">
+              <ion-col size-lg="4" size-xs="12">
+                <ion-button [disabled]="taskForm.invalid" (click)="updateMode ? update(selectedId) : createTask()"
+                  id="agregar" color="primary">{{
+                  updateMode ? 'EDITAR' : 'AGREGAR' }}
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      </ng-template>
+    </ion-modal>
+
+
+    <!-- MODAL DATETIME -->
+    <ion-modal [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime #datetime locale="es-MX" presentation="date" displayFormat="dd-MMMM-yyyy" id="datetime"
+          [showDefaultButtons]="true" (ionChange)="selectDate($event)">
+          <ion-buttons slot="buttons">
+            <ion-button color="danger" (click)="datetime.cancel(true)">CANCELAR</ion-button>
+            <ion-button color="primary" (click)="datetime.confirm(true)">CONFIRMAR</ion-button>
+          </ion-buttons>
+        </ion-datetime>
+      </ng-template>
+    </ion-modal>
+  </ng-container>
 </ion-content>
