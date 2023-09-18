@@ -1,0 +1,7 @@
+{
+  "name": "PRUEBA-TECNICA-CREATORIS",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
