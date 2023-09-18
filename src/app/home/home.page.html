@@ -1,35 +1,32 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <div class="container">
-
       <ion-text color="light">FECHA:</ion-text>
       <ion-datetime-button datetime="datetime"></ion-datetime-button>
-
-
     </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-
   <ng-container [formGroup]="taskForm">
     <ion-grid>
       <ion-row>
-
         <ion-col size="12">
-          <ion-card *ngIf=stats>
+          <ion-card class="ion-text-center" *ngIf="stats">
             <ion-card-header>
               <ion-card-title>TAREAS: {{stats.totalTasks}} </ion-card-title>
-
-
             </ion-card-header>
 
             <ion-card-content>
               <p>
-                <ion-text color="success">COMPLETADAS: {{stats.completedTasks}}</ion-text>
+                <ion-text color="success">
+                  <h2>COMPLETADAS: {{stats.completedTasks}}</h2>
+                </ion-text>
               </p>
               <p>
-                <ion-text color="tertiary">PENDIENTES: {{stats.pendingTasks}}</ion-text>
+                <ion-text color="tertiary">
+                  <h2>PENDIENTES: {{stats.pendingTasks}}</h2>
+                </ion-text>
               </p>
             </ion-card-content>
           </ion-card>
@@ -40,8 +37,6 @@
           <ion-list>
             <ng-container *ngIf="loaded && tasks.length > 0">
               <ion-item-sliding *ngFor="let task of tasks">
-
-
                 <ion-item>
                   <ion-checkbox (ionChange)="handleCheckbox($event,task._id)" [checked]="task.done"
                     justify="space-between">
@@ -49,7 +44,7 @@
                 </ion-item>
 
                 <ion-item-options side="end">
-                  <ion-item-option (click)=openUpdateModal(task)>
+                  <ion-item-option (click)="openUpdateModal(task)">
                     <ion-icon slot="icon-only" name="create"></ion-icon>
                   </ion-item-option>
                   <ion-item-option (click)="delete(task._id)" color="danger">
@@ -61,28 +56,15 @@
 
             <ng-container *ngIf="!loaded">
               <ion-item *ngFor="let skeleton of skeletons">
-
                 <ion-skeleton-text [animated]="true"></ion-skeleton-text>
-
               </ion-item>
             </ng-container>
-
-
           </ion-list>
         </ion-col>
       </ion-row>
     </ion-grid>
 
     <app-fab-button id="open-modal"></app-fab-button>
-
-
-
-
-
-
-
-
-
 
     <!-- MODAL TASK -->
 
@@ -98,15 +80,12 @@
                   </ion-input>
                 </ion-item>
               </ion-col>
-
-
             </ion-row>
 
             <ion-row class="ion-justify-content-end">
               <ion-col size-lg="4" size-xs="12">
                 <ion-button [disabled]="taskForm.invalid" (click)="updateMode ? update(selectedId) : createTask()"
-                  id="agregar" color="primary">{{
-                  updateMode ? 'EDITAR' : 'AGREGAR' }}
+                  id="agregar" color="primary">{{ updateMode ? 'EDITAR' : 'AGREGAR' }}
                 </ion-button>
               </ion-col>
             </ion-row>
@@ -114,7 +93,6 @@
         </div>
       </ng-template>
     </ion-modal>
-
 
     <!-- MODAL DATETIME -->
     <ion-modal [keepContentsMounted]="true">

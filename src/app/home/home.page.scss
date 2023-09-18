@@ -1,5 +1,5 @@
-ion-toolbar{
-  --background:#131b59;
+ion-toolbar {
+  --background: #131b59;
 
   .container {
     display: flex;
@@ -7,19 +7,16 @@ ion-toolbar{
     align-items: center;
     gap: 10px;
 
-    ion-text{
+    ion-text {
       font-weight: 550;
     }
   }
 }
 
-
-ion-label{
+ion-label {
   color: #131b59;
   font-weight: 550;
 }
-
-
 
 ion-modal {
   --height: auto;
@@ -32,16 +29,15 @@ ion-modal {
     padding: 20px;
   }
 
-  ion-item{
+  ion-item {
     width: 100%;
   }
 
-  ion-button#agregar{
+  ion-button#agregar {
     width: 100%;
     font-weight: 550;
   }
 }
-
 
 ion-checkbox {
   --size: 32px;
@@ -51,4 +47,8 @@ ion-checkbox {
 ion-checkbox::part(container) {
   border-radius: 6px;
   border: 2px solid #131b59;
+}
+
+h2 {
+  font-weight: 550;
 }
